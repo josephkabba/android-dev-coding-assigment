@@ -6,5 +6,4 @@ data class Comment(
     val id: Int,
     var name: String,
     val postId: Int,
-    val createdAt: Long = System.currentTimeMillis()
 )

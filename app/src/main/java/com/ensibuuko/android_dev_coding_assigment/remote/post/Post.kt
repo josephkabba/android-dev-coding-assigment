@@ -7,5 +7,4 @@ data class Post(
     val id: Int,
     var title: String,
     val userId: Int,
-    val createdAt: Long = System.currentTimeMillis()
 )

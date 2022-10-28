@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "comments_table")
-data class CommentModel(
+data class CommentLocalModel(
     var body: String,
     var email: String,
 

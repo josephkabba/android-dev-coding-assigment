@@ -5,5 +5,5 @@ data class PostDataModel(
     val id: Int,
     var title: String,
     val userId: Int,
-    val createdAt: Long
+    val createdAt: Long = System.currentTimeMillis()
 )

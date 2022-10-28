@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import com.ensibuuko.android_dev_coding_assigment.utils.CachePolicy
 import com.ensibuuko.android_dev_coding_assigment.utils.Resource
 import com.ensibuuko.android_dev_coding_assigment.domain.entities.PostEntity
+import com.ensibuuko.android_dev_coding_assigment.local.models.post.PostLocalModel
 
 interface PostsRepository {
 
@@ -13,5 +14,5 @@ interface PostsRepository {
 
     suspend fun deletePost(post: PostEntity)
 
-    suspend fun getPosts(id: Int, cachePolicy: CachePolicy): PagingSource<Int, Resource<List<PostEntity>>>
+    suspend fun getPosts(id: Int, cachePolicy: CachePolicy): PagingSource<Int, PostLocalModel>
 }

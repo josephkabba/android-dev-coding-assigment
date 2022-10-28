@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "posts_table")
-data class PostModel(
+data class PostLocalModel(
     var body: String,
 
     @PrimaryKey

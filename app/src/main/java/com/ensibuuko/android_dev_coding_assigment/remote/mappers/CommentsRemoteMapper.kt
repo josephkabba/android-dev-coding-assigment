@@ -11,7 +11,6 @@ class CommentsRemoteMapper : BaseRemoteMapper<CommentDataModel, Comment> {
         r.id,
         r.name,
         r.postId,
-        r.createdAt
     )
 
     override fun toRemote(d: CommentDataModel): Comment = Comment(
@@ -20,6 +19,5 @@ class CommentsRemoteMapper : BaseRemoteMapper<CommentDataModel, Comment> {
         d.id,
         d.name,
         d.postId,
-        d.createdAt
     )
 }

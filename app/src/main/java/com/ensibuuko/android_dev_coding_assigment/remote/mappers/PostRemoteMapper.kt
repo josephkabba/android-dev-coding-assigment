@@ -10,7 +10,6 @@ class PostRemoteMapper : BaseRemoteMapper<PostDataModel, Post> {
         r.id,
         r.title,
         r.userId,
-        r.createdAt
     )
 
     override fun toRemote(d: PostDataModel): Post = Post(
@@ -18,6 +17,5 @@ class PostRemoteMapper : BaseRemoteMapper<PostDataModel, Post> {
         d.id,
         d.title,
         d.userId,
-        d.createdAt
     )
 }

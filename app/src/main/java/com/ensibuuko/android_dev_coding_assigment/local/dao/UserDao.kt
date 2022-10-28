@@ -1,30 +1,30 @@
 package com.ensibuuko.android_dev_coding_assigment.local.dao
 
 import androidx.room.*
-import com.ensibuuko.android_dev_coding_assigment.local.models.user.AddressModel
-import com.ensibuuko.android_dev_coding_assigment.local.models.user.CompanyModel
-import com.ensibuuko.android_dev_coding_assigment.local.models.user.GeoModel
-import com.ensibuuko.android_dev_coding_assigment.local.models.user.UserModel
+import com.ensibuuko.android_dev_coding_assigment.local.models.user.AddressLocalModel
+import com.ensibuuko.android_dev_coding_assigment.local.models.user.CompanyLocalModel
+import com.ensibuuko.android_dev_coding_assigment.local.models.user.GeoLocalModel
+import com.ensibuuko.android_dev_coding_assigment.local.models.user.UserLocalModel
 import com.ensibuuko.android_dev_coding_assigment.local.relations.user.UserRelation
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
-    @Insert
-    suspend fun insertUser(user: UserModel)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUser(user: UserLocalModel)
 
     @Transaction
     @Query("SELECT * FROM user_table WHERE id=:id LIMIT 1")
-    suspend fun getUser(id: String): Flow<UserRelation>
+    suspend fun getUser(id: Int): UserRelation?
 
-    @Insert
-    suspend fun insertAddress(address: AddressModel)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAddress(address: AddressLocalModel)
 
-    @Insert
-    suspend fun insertCompany(company: CompanyModel)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCompany(company: CompanyLocalModel)
 
-    @Insert
-    suspend fun insertGeo(geo: GeoModel)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertGeo(geo: GeoLocalModel)
 
     @Query("DELETE FROM user_table")
     suspend fun clear()

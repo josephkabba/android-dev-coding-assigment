@@ -14,5 +14,5 @@ data class UserDataModel(
     val phone: String,
     val username: String,
     val website: String,
-    val createdAt: Long
+    val createdAt: Long = System.currentTimeMillis()
 )

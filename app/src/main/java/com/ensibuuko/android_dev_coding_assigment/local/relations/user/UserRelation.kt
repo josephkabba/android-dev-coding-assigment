@@ -2,30 +2,30 @@ package com.ensibuuko.android_dev_coding_assigment.local.relations.user
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.ensibuuko.android_dev_coding_assigment.local.models.user.AddressModel
-import com.ensibuuko.android_dev_coding_assigment.local.models.user.CompanyModel
-import com.ensibuuko.android_dev_coding_assigment.local.models.user.GeoModel
-import com.ensibuuko.android_dev_coding_assigment.local.models.user.UserModel
+import com.ensibuuko.android_dev_coding_assigment.local.models.user.AddressLocalModel
+import com.ensibuuko.android_dev_coding_assigment.local.models.user.CompanyLocalModel
+import com.ensibuuko.android_dev_coding_assigment.local.models.user.GeoLocalModel
+import com.ensibuuko.android_dev_coding_assigment.local.models.user.UserLocalModel
 
 
 data class UserRelation (
-    @Embedded val user: UserModel,
+    @Embedded val user: UserLocalModel,
 
     @Relation(
         parentColumn = "id",
         entityColumn = "userId"
     )
-    val geo: GeoModel,
+    val geo: GeoLocalModel,
 
     @Relation(
         parentColumn = "id",
         entityColumn = "userId"
     )
-    val address: AddressModel,
+    val address: AddressLocalModel,
 
     @Relation(
         parentColumn = "id",
         entityColumn = "userId"
     )
-    val company: CompanyModel,
+    val company: CompanyLocalModel,
 )

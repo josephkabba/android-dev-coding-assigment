@@ -9,5 +9,4 @@ data class User(
     val phone: String,
     val username: String,
     val website: String,
-    val createdAt: Long = System.currentTimeMillis()
 )
