@@ -3,8 +3,9 @@ package com.ensibuuko.android_dev_coding_assigment.data.mappers
 import com.ensibuuko.android_dev_coding_assigment.data.BaseDataMapper
 import com.ensibuuko.android_dev_coding_assigment.data.models.PostDataModel
 import com.ensibuuko.android_dev_coding_assigment.domain.entities.PostEntity
+import javax.inject.Inject
 
-class PostDataMapper : BaseDataMapper<PostEntity ,PostDataModel> {
+class PostDataMapper @Inject constructor() : BaseDataMapper<PostEntity ,PostDataModel> {
 
     override fun toDomain(f: PostDataModel): PostEntity {
         return PostEntity(

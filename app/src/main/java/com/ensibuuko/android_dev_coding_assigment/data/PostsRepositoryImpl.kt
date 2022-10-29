@@ -28,6 +28,12 @@ class PostsRepositoryImpl @Inject constructor(
         postService.createPost(postRemoteMapper.toRemote(postDataModel))
     }
 
+    override suspend fun insertPosts(posts: List<PostEntity>) {
+        val postDataList = posts.map { postDataMapper.toData(it) }
+        val postLocalList = postDataList.map { postLocalMapper.toLocal(it) }
+        postDao.insertPosts(postLocalList)
+    }
+
     override suspend fun updatePost(post: PostEntity) {
         val postDataModel = postDataMapper.toData(post)
         postDao.updatePost(postLocalMapper.toLocal(postDataModel))
@@ -40,30 +46,31 @@ class PostsRepositoryImpl @Inject constructor(
         postService.deletePost(post.id)
     }
 
-    override suspend fun getPosts(
-        id: Int,
-        cachePolicy: CachePolicy
-    ): PagingSource<Int, PostLocalModel> {
-        return when(cachePolicy.type){
-            CachePolicy.Type.REFRESH -> {
-               postService.getPosts().onSuccess {
-                   val results = it.map { post ->
-                       postRemoteMapper.toData(post)
-                   }
+    override fun getPosts(): PagingSource<Int, PostLocalModel> {
+        return postDao.getPosts()
+    }
 
-                   val resultsToLocal = results.map { post ->
-                       postLocalMapper.toLocal(post)
-                   }
+    override suspend fun getPostsFromNetwork(): Resource<List<PostEntity>> {
+        val result = postService.getPosts()
 
-                   postDao.insertPosts(resultsToLocal)
-
-               }
-                postDao.getPosts()
+        return if (result.isSuccess){
+            val results = result.getOrNull()?.map { post ->
+                postRemoteMapper.toData(post)
             }
 
-            else -> {
-                postDao.getPosts()
+            val resultsToEntity = results?.map { post ->
+                postDataMapper.toDomain(post)
             }
+
+            Resource.success(resultsToEntity)
+        }else {
+            val error = result.exceptionOrNull()?.message ?: "Error message"
+
+            Resource.error(error)
         }
+    }
+
+    override suspend fun clear() {
+        postDao.clear()
     }
 }

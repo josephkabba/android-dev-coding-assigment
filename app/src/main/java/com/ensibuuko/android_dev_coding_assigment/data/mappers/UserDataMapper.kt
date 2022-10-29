@@ -9,8 +9,9 @@ import com.ensibuuko.android_dev_coding_assigment.domain.entities.UserEntity
 import com.ensibuuko.android_dev_coding_assigment.domain.entities.user.AddressEntity
 import com.ensibuuko.android_dev_coding_assigment.domain.entities.user.CompanyEntity
 import com.ensibuuko.android_dev_coding_assigment.domain.entities.user.GeoEntity
+import javax.inject.Inject
 
-class UserDataMapper : BaseDataMapper<UserEntity, UserDataModel> {
+class UserDataMapper @Inject constructor() : BaseDataMapper<UserEntity, UserDataModel> {
 
     override fun toDomain(f: UserDataModel): UserEntity {
         return UserEntity(

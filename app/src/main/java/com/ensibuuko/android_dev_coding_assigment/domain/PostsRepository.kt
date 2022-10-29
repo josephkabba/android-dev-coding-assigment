@@ -10,9 +10,15 @@ interface PostsRepository {
 
     suspend fun insertPost(post: PostEntity)
 
+    suspend fun insertPosts(posts: List<PostEntity>)
+
     suspend fun updatePost(post: PostEntity)
 
     suspend fun deletePost(post: PostEntity)
 
-    suspend fun getPosts(id: Int, cachePolicy: CachePolicy): PagingSource<Int, PostLocalModel>
+    fun getPosts(): PagingSource<Int, PostLocalModel>
+
+    suspend fun getPostsFromNetwork(): Resource<List<PostEntity>>
+
+    suspend fun clear()
 }

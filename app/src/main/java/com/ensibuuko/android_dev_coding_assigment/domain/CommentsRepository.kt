@@ -10,9 +10,15 @@ interface CommentsRepository {
 
     suspend fun insertComment(comment: CommentEntity)
 
+    suspend fun insertComments(comments: List<CommentEntity>)
+
     suspend fun updateComment(comment: CommentEntity)
 
     suspend fun deleteComment(comment: CommentEntity)
 
-    suspend fun getComments(postId: Int, cachePolicy: CachePolicy): PagingSource<Int, CommentLocalModel>
+    fun getComments(postId: Int): PagingSource<Int, CommentLocalModel>
+
+    suspend fun getCommentsFromNetwork(postId: Int): Resource<List<CommentEntity>>
+
+    suspend fun clear()
 }

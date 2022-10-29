@@ -22,11 +22,11 @@ UserRepositoryImpl @Inject constructor(
     private val userDao: UserDao,
     private val userService: UserService
 ) : UserRepository {
-    override suspend fun getUser(id: Int, cachePolicy: CachePolicy): Flow<Resource<UserEntity>> {
+    override suspend fun getUser(id: Int, cachePolicy: CachePolicy.Type): Flow<Resource<UserEntity>> {
 
 
         return flow {
-            when (cachePolicy.type) {
+            when (cachePolicy) {
                 CachePolicy.Type.NEVER -> {
                     userService.getUser(id).onSuccess {
                         val result = userDataMapper.toDomain(userRemoteMapper.toData(it))
@@ -114,5 +114,9 @@ UserRepositoryImpl @Inject constructor(
                 }
             }
         }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun clear() {
+        userDao.clear()
     }
 }

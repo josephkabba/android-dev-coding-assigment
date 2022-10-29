@@ -9,8 +9,9 @@ import com.ensibuuko.android_dev_coding_assigment.remote.user.Address
 import com.ensibuuko.android_dev_coding_assigment.remote.user.Company
 import com.ensibuuko.android_dev_coding_assigment.remote.user.Geo
 import com.ensibuuko.android_dev_coding_assigment.remote.user.User
+import javax.inject.Inject
 
-class UserRemoteMapper : BaseRemoteMapper<UserDataModel, User> {
+class UserRemoteMapper @Inject constructor() : BaseRemoteMapper<UserDataModel, User> {
     override fun toRemote(d: UserDataModel): User {
         return User(
             address = addressToRemote(d.address),

@@ -26,6 +26,12 @@ class CommentsRepositoryImpl @Inject constructor(
         commentService.createComment(comment.postId, commentsRemoteMapper.toRemote(commentDataModel))
     }
 
+    override suspend fun insertComments(comments: List<CommentEntity>) {
+        val commentDataList = comments.map { commentsDataMapper.toData(it) }
+        val commentLocalList = commentDataList.map { commentsLocalMapper.toLocal(it) }
+        commentDao.insertComments(commentLocalList)
+    }
+
     override suspend fun updateComment(comment: CommentEntity) {
         val commentDataModel = commentsDataMapper.toData(comment)
         commentDao.updateComment(commentsLocalMapper.toLocal(commentDataModel))
@@ -38,31 +44,35 @@ class CommentsRepositoryImpl @Inject constructor(
         commentService.deleteComment(comment.postId, comment.id)
     }
 
-    override suspend fun getComments(
-        postId: Int,
-        cachePolicy: CachePolicy
+    override fun getComments(
+        postId: Int
     ): PagingSource<Int, CommentLocalModel> {
-        return when(cachePolicy.type){
-            CachePolicy.Type.REFRESH -> {
-                commentService.getPostComments(postId).onSuccess {
-                    val results = it.map { comment ->
-                        commentsRemoteMapper.toData(comment)
-                    }
+        return  commentDao.getComments(postId)
+    }
 
-                    val resultsToLocal = results.map { comment ->
-                        commentsLocalMapper.toLocal(comment)
-                    }
+    override suspend fun getCommentsFromNetwork(postId: Int): Resource<List<CommentEntity>> {
 
-                    commentDao.insertComments(resultsToLocal)
+        val result = commentService.getPostComments(postId)
 
-                }
-               commentDao.getComments(postId)
+        return if (result.isSuccess){
+
+            val results = result.getOrNull()?.map { comment ->
+                commentsRemoteMapper.toData(comment)
             }
 
-            else -> {
-                commentDao.getComments(postId)
+            val resultsToEntity = results?.map { comment ->
+                commentsDataMapper.toDomain(comment)
             }
+
+            Resource.success(resultsToEntity)
+        }else {
+            val error = result.exceptionOrNull()?.message ?: "Network Error"
+            Resource.error(error)
         }
+    }
+
+    override suspend fun clear() {
+        commentDao.clear()
     }
 
 }

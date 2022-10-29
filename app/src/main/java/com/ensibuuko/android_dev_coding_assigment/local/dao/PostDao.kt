@@ -13,6 +13,7 @@ interface PostDao {
     @Update
     suspend fun updatePost(post: PostLocalModel)
 
+    @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPosts(post: List<PostLocalModel>)
 
@@ -22,6 +23,7 @@ interface PostDao {
     @Query("SELECT * FROM posts_table")
     fun getPosts(): PagingSource<Int, PostLocalModel>
 
+    @Transaction
     @Query("DELETE FROM posts_table")
     suspend fun clear()
 }

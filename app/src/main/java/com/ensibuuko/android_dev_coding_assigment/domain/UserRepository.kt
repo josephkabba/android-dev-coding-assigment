@@ -7,5 +7,7 @@ import com.ensibuuko.android_dev_coding_assigment.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
-    suspend fun getUser(id: Int, cachePolicy: CachePolicy): Flow<Resource<UserEntity>>
+    suspend fun getUser(id: Int, cachePolicy: CachePolicy.Type): Flow<Resource<UserEntity>>
+
+    suspend fun clear()
 }

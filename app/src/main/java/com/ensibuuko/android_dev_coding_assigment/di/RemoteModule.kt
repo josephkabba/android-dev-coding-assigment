@@ -11,12 +11,16 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 
 @Module
 @InstallIn(SingletonComponent::class)
 object RemoteModule {
-    private fun getRetrofitInstance(): Retrofit {
+
+    @Provides
+    @Singleton
+    fun provideRetrofitInstance(): Retrofit {
         val baseUrl = "https://jsonplaceholder.typicode.com"
         return Retrofit.Builder()
             .client(OkHttpClient.Builder().build())
@@ -27,21 +31,21 @@ object RemoteModule {
 
     @Provides
     fun providePostService(
-        retrofit: Retrofit = getRetrofitInstance()
+        retrofit: Retrofit
     ): PostService {
         return retrofit.create(PostService::class.java)
     }
 
     @Provides
     fun provideUserService(
-        retrofit: Retrofit = getRetrofitInstance()
+        retrofit: Retrofit
     ): UserService {
         return retrofit.create(UserService::class.java)
     }
 
     @Provides
     fun provideCommentService(
-        retrofit: Retrofit = getRetrofitInstance()
+        retrofit: Retrofit
     ): CommentService {
         return retrofit.create(CommentService::class.java)
     }

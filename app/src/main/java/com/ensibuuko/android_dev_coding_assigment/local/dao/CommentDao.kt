@@ -12,6 +12,7 @@ interface CommentDao {
     @Update
     suspend fun updateComment(comment: CommentLocalModel)
 
+    @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertComments(comment: List<CommentLocalModel>)
 
@@ -21,6 +22,7 @@ interface CommentDao {
     @Query("SELECT * FROM comments_table WHERE postId=:postId")
     fun getComments(postId: Int): PagingSource<Int, CommentLocalModel>
 
+    @Transaction
     @Query("DELETE FROM comments_table")
     suspend fun clear()
 }

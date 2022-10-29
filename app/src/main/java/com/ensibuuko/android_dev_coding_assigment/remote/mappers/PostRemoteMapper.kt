@@ -3,8 +3,9 @@ package com.ensibuuko.android_dev_coding_assigment.remote.mappers
 import com.ensibuuko.android_dev_coding_assigment.data.models.PostDataModel
 import com.ensibuuko.android_dev_coding_assigment.remote.BaseRemoteMapper
 import com.ensibuuko.android_dev_coding_assigment.remote.post.Post
+import javax.inject.Inject
 
-class PostRemoteMapper : BaseRemoteMapper<PostDataModel, Post> {
+class PostRemoteMapper @Inject constructor() : BaseRemoteMapper<PostDataModel, Post> {
     override fun toData(r: Post): PostDataModel = PostDataModel(
         r.body,
         r.id,

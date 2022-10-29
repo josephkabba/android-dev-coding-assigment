@@ -4,8 +4,9 @@ import com.ensibuuko.android_dev_coding_assigment.data.models.CommentDataModel
 import com.ensibuuko.android_dev_coding_assigment.domain.entities.CommentEntity
 import com.ensibuuko.android_dev_coding_assigment.local.BaseLocalMapper
 import com.ensibuuko.android_dev_coding_assigment.local.models.comment.CommentLocalModel
+import javax.inject.Inject
 
-class CommentsLocalMapper : BaseLocalMapper<CommentDataModel, CommentLocalModel> {
+class CommentsLocalMapper @Inject constructor() : BaseLocalMapper<CommentDataModel, CommentLocalModel> {
     override fun toData(l: CommentLocalModel): CommentDataModel = CommentDataModel(
         l.body,
         l.email,

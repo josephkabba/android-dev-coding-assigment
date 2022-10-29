@@ -3,8 +3,9 @@ package com.ensibuuko.android_dev_coding_assigment.remote.mappers
 import com.ensibuuko.android_dev_coding_assigment.data.models.CommentDataModel
 import com.ensibuuko.android_dev_coding_assigment.remote.BaseRemoteMapper
 import com.ensibuuko.android_dev_coding_assigment.remote.comment.Comment
+import javax.inject.Inject
 
-class CommentsRemoteMapper : BaseRemoteMapper<CommentDataModel, Comment> {
+class CommentsRemoteMapper @Inject constructor() : BaseRemoteMapper<CommentDataModel, Comment> {
     override fun toData(r: Comment): CommentDataModel = CommentDataModel(
         r.body,
         r.email,
