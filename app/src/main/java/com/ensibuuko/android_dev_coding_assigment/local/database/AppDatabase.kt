@@ -14,7 +14,8 @@ import com.ensibuuko.android_dev_coding_assigment.local.models.user.UserLocalMod
 
 @Database(
     entities = [PostLocalModel::class, CommentLocalModel::class, UserLocalModel::class, AddressLocalModel::class, CompanyLocalModel::class, GeoLocalModel::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun postDao(): PostDao

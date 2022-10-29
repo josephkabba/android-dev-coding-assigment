@@ -18,8 +18,8 @@ interface CommentDao {
     @Delete
     suspend fun deleteComment(comment: CommentLocalModel)
 
-    @Query("SELECT * FROM comments_table WHERE postId =: postId")
-    suspend fun getComments(postId: Int): PagingSource<Int, CommentLocalModel>
+    @Query("SELECT * FROM comments_table WHERE postId=:postId")
+    fun getComments(postId: Int): PagingSource<Int, CommentLocalModel>
 
     @Query("DELETE FROM comments_table")
     suspend fun clear()

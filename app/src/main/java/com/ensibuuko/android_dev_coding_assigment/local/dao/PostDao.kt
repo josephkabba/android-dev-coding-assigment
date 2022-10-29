@@ -20,7 +20,7 @@ interface PostDao {
     suspend fun deletePost(post: PostLocalModel)
 
     @Query("SELECT * FROM posts_table")
-    suspend fun getPosts(): PagingSource<Int, PostLocalModel>
+    fun getPosts(): PagingSource<Int, PostLocalModel>
 
     @Query("DELETE FROM posts_table")
     suspend fun clear()

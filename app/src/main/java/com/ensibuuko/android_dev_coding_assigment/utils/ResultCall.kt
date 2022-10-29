@@ -1,6 +1,7 @@
 package com.ensibuuko.android_dev_coding_assigment.utils
 
 import okhttp3.Request
+import okio.Timeout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.HttpException
@@ -73,5 +74,9 @@ class ResultCall<T>(private val delegate: Call<T>) :
 
     override fun request(): Request {
         return delegate.request()
+    }
+
+    override fun timeout(): Timeout {
+        return delegate.timeout()
     }
 }
