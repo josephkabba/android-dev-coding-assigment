@@ -22,7 +22,7 @@ UserRepositoryImpl @Inject constructor(
     private val userDao: UserDao,
     private val userService: UserService
 ) : UserRepository {
-    override suspend fun getUser(id: Int, cachePolicy: CachePolicy.Type): Flow<Resource<UserEntity>> {
+    override suspend fun getUser(id: Int, cachePolicy: CachePolicy.Type, saveUser: Boolean): Flow<Resource<UserEntity>> {
 
 
         return flow {
@@ -45,7 +45,8 @@ UserRepositoryImpl @Inject constructor(
                             it.name,
                             it.phone,
                             it.username,
-                            it.website
+                            it.website,
+                            saveUser
                         )
 
                         val address = it.address

@@ -1,5 +1,8 @@
 package com.ensibuuko.android_dev_coding_assigment.presentation.view_models
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
@@ -9,11 +12,13 @@ import com.ensibuuko.android_dev_coding_assigment.local.mappaers.CommentsLocalMa
 import com.ensibuuko.android_dev_coding_assigment.presentation.mappers.CommentsUIMapper
 import com.ensibuuko.android_dev_coding_assigment.presentation.mediators.CommentsRemoteMediator
 import com.ensibuuko.android_dev_coding_assigment.presentation.models.CommentUIModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class PostViewModel @Inject constructor(
     private val getCommentsNetworkUseCase: GetCommentsNetworkUseCase,
     private val getCommentsUseCase: GetCommentsUseCase,
@@ -24,7 +29,8 @@ class PostViewModel @Inject constructor(
     private val updateCommentUseCase: UpdateCommentUseCase,
     private val commentsLocalMapper: CommentsLocalMapper,
     private val insertAllCommentsUseCase: InsertAllCommentsUseCase,
-    private val deleteAllCommentsUseCase: DeleteAllCommentsUseCase
+    private val deleteAllCommentsUseCase: DeleteAllCommentsUseCase,
+    private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -67,6 +73,12 @@ class PostViewModel @Inject constructor(
         viewModelScope.launch {
             insertCommentUseCase(commentsUIMapper.toDomain(commentUIModel))
         }
+    }
+
+    private val USER_ID = intPreferencesKey("example_counter")
+
+    val currentUserId: Flow<Int?> = dataStore.data.map { preferences ->
+        preferences[USER_ID]
     }
 
 }

@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,15 +26,15 @@ fun CustomButton(modifier: Modifier = Modifier,
         enabled = enabled,
         shape = RoundedCornerShape(20.dp),
         colors = ButtonDefaults.buttonColors(
-            disabledContainerColor = Color.LightGray,
+            disabledBackgroundColor = Color.LightGray,
             disabledContentColor = Color.White,
-            containerColor = color,
+            backgroundColor = color,
             contentColor = Color.White
         ),
         modifier = modifier
             .fillMaxWidth()
             .height(51.dp),
-        elevation = ButtonDefaults.buttonElevation(
+        elevation = ButtonDefaults.elevation(
             defaultElevation = 6.dp,
             pressedElevation = 1.dp,
             disabledElevation = 0.dp
@@ -44,7 +44,7 @@ fun CustomButton(modifier: Modifier = Modifier,
         })
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun CustomTextField(modifier: Modifier = Modifier,
                     enabled: Boolean = true,
@@ -71,7 +71,7 @@ fun CustomTextField(modifier: Modifier = Modifier,
         },
 
         colors = textFieldDefaults.textFieldColors(
-            containerColor = Color.White,
+            backgroundColor = Color.White,
             cursorColor = customGreen,
             focusedLabelColor = customBlue,
             errorLabelColor = Color.Red,

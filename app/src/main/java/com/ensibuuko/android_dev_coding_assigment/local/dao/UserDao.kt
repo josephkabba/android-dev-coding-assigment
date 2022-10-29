@@ -26,6 +26,6 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGeo(geo: GeoLocalModel)
 
-    @Query("DELETE FROM user_table")
+    @Query("DELETE FROM user_table WHERE persist=0")
     suspend fun clear()
 }

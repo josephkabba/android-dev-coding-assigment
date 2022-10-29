@@ -6,40 +6,25 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavController
 
-class LoginScreenStateHolder (private val resources: Resources, val navController: NavController)  {
-    var email by mutableStateOf("")
-    var password by mutableStateOf("")
+class LoginScreenStateHolder(val resources: Resources, val navController: NavController) {
+    var id by mutableStateOf("")
 
     var error by mutableStateOf("")
     var showError by mutableStateOf(false)
+    var idError by mutableStateOf(false)
 
-    var passwordError by mutableStateOf(false)
-    var emailError by mutableStateOf(false)
+    fun signInUser(callBack: (id: String) -> Unit) {
 
-    var showPassword by mutableStateOf(false)
-
-    fun signInUser(callBack: (email: String, password: String) -> Unit){
-
-        if (emailError or passwordError or showError) {
-            emailError = false
-            passwordError = false
+        if (idError or showError) {
+            idError = false
             showError = false
         }
 
-        if (email.isBlank() or password.isBlank()) {
-            if (email.isBlank()) {
-                emailError = true
-                error = "Enter email"
-                return
-            }
-
-            if (password.isBlank()) {
-                passwordError = true
-                error = "Enter password"
-                return
-            }
-        }else {
-            callBack(email, password)
+        if (id.isBlank() or id.isEmpty()) {
+            idError = true
+            error = "Enter email"
+        } else {
+            callBack(id)
         }
     }
 }

@@ -1,5 +1,8 @@
 package com.ensibuuko.android_dev_coding_assigment.presentation.view_models
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
@@ -30,7 +33,8 @@ class HomeViewModel @Inject constructor(
     private val insertPostUseCase: InsertPostUseCase,
     private val getUserUseCase: GetUserUseCase,
     private val updatePostUseCase: UpdatePostUseCase,
-    private val deletePostUseCase: DeletePostUseCase
+    private val deletePostUseCase: DeletePostUseCase,
+    private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -70,5 +74,11 @@ class HomeViewModel @Inject constructor(
             val postEntity = postUIMapper.toDomain(post)
             deletePostUseCase(postEntity)
         }
+    }
+
+    private val USER_ID = intPreferencesKey("example_counter")
+
+    val currentUserId: Flow<Int?> = dataStore.data.map { preferences ->
+        preferences[USER_ID]
     }
 }

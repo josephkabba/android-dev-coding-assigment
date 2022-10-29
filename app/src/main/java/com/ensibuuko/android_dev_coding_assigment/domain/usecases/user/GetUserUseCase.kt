@@ -10,7 +10,7 @@ import javax.inject.Inject
 class GetUserUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    suspend operator fun invoke(id: Int, cachePolicy: CachePolicy.Type): Flow<Resource<UserEntity>> {
-        return userRepository.getUser(id, cachePolicy)
+    suspend operator fun invoke(id: Int, cachePolicy: CachePolicy.Type, saveUser: Boolean = false): Flow<Resource<UserEntity>> {
+        return userRepository.getUser(id, cachePolicy, saveUser)
     }
 }

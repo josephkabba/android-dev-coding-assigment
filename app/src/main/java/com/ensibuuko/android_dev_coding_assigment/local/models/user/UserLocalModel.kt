@@ -17,6 +17,7 @@ data class UserLocalModel(
     val phone: String,
     val username: String,
     val website: String,
+    val persist: Boolean = false,
 
     val createdAt: Long = System.currentTimeMillis()
 )
@@ -29,5 +30,6 @@ fun UserLocalModel.toDataModel(addressDataModel: AddressDataModel, companyDataMo
     name = this.name,
     phone = this.phone,
     username = this.username,
-    website = this.website
+    website = this.website,
+    persist = this.persist
 )

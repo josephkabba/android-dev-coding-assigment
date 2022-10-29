@@ -23,7 +23,8 @@ class UserUIMapper @Inject constructor() : BaseUIMapper<UserEntity, UserUIModel>
             phone = u.phone,
             username = u.username,
             website = u.website,
-            createdAt = u.createdAt
+            createdAt = u.createdAt,
+            persist = u.persist
         )
     }
 
@@ -37,7 +38,8 @@ class UserUIMapper @Inject constructor() : BaseUIMapper<UserEntity, UserUIModel>
             phone = d.phone,
             username = d.username,
             website = d.website,
-            createdAt = d.createdAt
+            createdAt = d.createdAt,
+            persist = d.persist
         )
     }
 

@@ -23,7 +23,8 @@ class UserDataMapper @Inject constructor() : BaseDataMapper<UserEntity, UserData
             phone = f.phone,
             username = f.username,
             website = f.website,
-            createdAt = f.createdAt
+            createdAt = f.createdAt,
+            persist = f.persist
         )
     }
 
@@ -37,7 +38,8 @@ class UserDataMapper @Inject constructor() : BaseDataMapper<UserEntity, UserData
             phone = t.phone,
             username = t.username,
             website = t.website,
-            createdAt = t.createdAt
+            createdAt = t.createdAt,
+            persist = t.persist
         )
     }
 

@@ -12,5 +12,6 @@ data class UserEntity(
     val phone: String,
     val username: String,
     val website: String,
-    val createdAt: Long
+    val createdAt: Long,
+    val persist: Boolean = false
 )
