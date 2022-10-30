@@ -137,7 +137,7 @@ fun MainApp(navController: NavHostController, id: Int) {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.HomeScreen.route) {
-                HomeScreen(navController = navController)
+                HomeScreen(navController = navController, userId = id)
             }
             composable(Screen.AccountScreen.route) {
                 AccountScreen(navController = navController, id)
@@ -160,7 +160,8 @@ fun MainApp(navController: NavHostController, id: Int) {
                 it.arguments?.let { it1 ->
                     PostScreen(
                         navController = navController,
-                        it1.getInt("id")
+                        userId = id,
+                        postId = it1.getInt("id")
                     )
                 }
             }

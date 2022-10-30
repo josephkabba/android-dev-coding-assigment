@@ -8,10 +8,15 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.ensibuuko.android_dev_coding_assigment.data.mappers.CommentsDataMapper
 import com.ensibuuko.android_dev_coding_assigment.domain.usecases.comments.*
+import com.ensibuuko.android_dev_coding_assigment.domain.usecases.user.GetUserUseCase
 import com.ensibuuko.android_dev_coding_assigment.local.mappaers.CommentsLocalMapper
 import com.ensibuuko.android_dev_coding_assigment.presentation.mappers.CommentsUIMapper
+import com.ensibuuko.android_dev_coding_assigment.presentation.mappers.UserUIMapper
 import com.ensibuuko.android_dev_coding_assigment.presentation.mediators.CommentsRemoteMediator
 import com.ensibuuko.android_dev_coding_assigment.presentation.models.CommentUIModel
+import com.ensibuuko.android_dev_coding_assigment.presentation.models.UserUIModel
+import com.ensibuuko.android_dev_coding_assigment.utils.CachePolicy
+import com.ensibuuko.android_dev_coding_assigment.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -30,6 +35,8 @@ class PostViewModel @Inject constructor(
     private val commentsLocalMapper: CommentsLocalMapper,
     private val insertAllCommentsUseCase: InsertAllCommentsUseCase,
     private val deleteAllCommentsUseCase: DeleteAllCommentsUseCase,
+    private val getUserUseCase: GetUserUseCase,
+    private val userUIMapper: UserUIMapper,
     private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
@@ -53,6 +60,23 @@ class PostViewModel @Inject constructor(
                 commentsUIMapper.toUI(commentToEntity)
             }
         }.cachedIn(viewModelScope)
+    }
+
+    suspend fun getUser(id: Int, cachePolicy: CachePolicy.Type, saveUser: Boolean = false): Flow<Resource<UserUIModel>?> {
+        val user = getUserUseCase(id, cachePolicy, saveUser).map { when(it.status){
+            Resource.Status.SUCCESS -> {
+                Resource.success(it.data?.let { it1 -> userUIMapper.toUI(it1) })
+            }
+
+            Resource.Status.ERROR -> {
+                it.message?.let { it1 -> Resource.error(it1) }
+            }
+
+            else -> {
+                Resource.loading()
+            }
+        } }
+        return user
     }
 
     fun deleteComment(commentUIModel: CommentUIModel){

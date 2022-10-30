@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.ensibuuko.android_dev_coding_assigment.data.mappers.PostDataMapper
 import com.ensibuuko.android_dev_coding_assigment.domain.entities.UserEntity
 import com.ensibuuko.android_dev_coding_assigment.domain.usecases.post.*

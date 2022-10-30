@@ -1,5 +1,6 @@
 package com.ensibuuko.android_dev_coding_assigment.data
 
+import android.util.Log
 import androidx.paging.PagingSource
 import com.ensibuuko.android_dev_coding_assigment.data.mappers.CommentsDataMapper
 import com.ensibuuko.android_dev_coding_assigment.utils.CachePolicy
@@ -41,7 +42,7 @@ class CommentsRepositoryImpl @Inject constructor(
     override suspend fun deleteComment(comment: CommentEntity) {
         val commentDataModel = commentsDataMapper.toData(comment)
         commentDao.deleteComment(commentsLocalMapper.toLocal(commentDataModel))
-        commentService.deleteComment(comment.postId, comment.id)
+        //commentService.deleteComment(comment.postId, comment.id)
     }
 
     override fun getComments(

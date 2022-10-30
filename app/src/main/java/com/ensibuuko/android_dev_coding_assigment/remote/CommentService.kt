@@ -8,7 +8,7 @@ import retrofit2.http.*
 interface CommentService {
 
     @POST("/posts/{postId}/comments")
-    suspend fun createComment(@Path("postId") postId: Int, comment: Comment)
+    suspend fun createComment(@Path("postId") postId: Int, @Body comment: Comment)
 
     @GET("/posts/{postId}/comments")
     suspend fun getPostComments(@Path("postId") postId: Int): Result<GetPostCommentsResponse>
@@ -17,5 +17,5 @@ interface CommentService {
     suspend fun deleteComment(@Path("postId") postId: Int, @Path("commentId") commentId: Int)
 
     @PUT("/posts/{postId}/comments/{commentId}")
-    suspend fun updatePost(@Path("postId") postId: Int, @Path("commentId") commentId: Int, comment: Comment)
+    suspend fun updatePost(@Path("postId") postId: Int, @Path("commentId") commentId: Int, @Body comment: Comment)
 }

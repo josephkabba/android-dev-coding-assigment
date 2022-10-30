@@ -43,7 +43,7 @@ class PostsRepositoryImpl @Inject constructor(
     override suspend fun deletePost(post: PostEntity) {
         val postDataModel = postDataMapper.toData(post)
         postDao.deletePost(postLocalMapper.toLocal(postDataModel))
-        postService.deletePost(post.id)
+        //postService.deletePost(post.id)
     }
 
     override fun getPosts(): PagingSource<Int, PostLocalModel> {
