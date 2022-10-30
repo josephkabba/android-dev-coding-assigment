@@ -8,12 +8,12 @@ import androidx.navigation.compose.rememberNavController
 import com.ensibuuko.android_dev_coding_assigment.presentation.view_models.PostViewModel
 
 @Composable
-fun PostScreen(navController: NavController, viewModel: PostViewModel = hiltViewModel()) {
+fun PostScreen(navController: NavController, postId: Int, viewModel: PostViewModel = hiltViewModel()) {
 
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewAccountScreen() {
-    PostScreen(navController = rememberNavController())
+    PostScreen(navController = rememberNavController(), 0)
 }

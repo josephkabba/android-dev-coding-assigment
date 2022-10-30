@@ -1,5 +1,6 @@
 package com.ensibuuko.android_dev_coding_assigment.presentation.mediators
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -32,6 +33,12 @@ class PostsRemoteMediator @Inject constructor(
 
             when (response.status) {
                 Resource.Status.SUCCESS -> {
+
+                    if (loadType == LoadType.REFRESH) {
+                        deleteAllPostsUseCase()
+                        deleteAllUsersUseCase()
+                    }
+
                     response.data?.let { insertAllPostsUseCase(it) }
                 }
 
@@ -42,11 +49,6 @@ class PostsRemoteMediator @Inject constructor(
                 else -> {
 
                 }
-            }
-
-            if (loadType == LoadType.REFRESH) {
-                deleteAllPostsUseCase()
-                deleteAllUsersUseCase()
             }
 
             MediatorResult.Success(

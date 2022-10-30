@@ -13,8 +13,10 @@ import com.ensibuuko.android_dev_coding_assigment.domain.usecases.user.DeleteAll
 import com.ensibuuko.android_dev_coding_assigment.domain.usecases.user.GetUserUseCase
 import com.ensibuuko.android_dev_coding_assigment.local.mappaers.PostLocalMapper
 import com.ensibuuko.android_dev_coding_assigment.presentation.mappers.PostUIMapper
+import com.ensibuuko.android_dev_coding_assigment.presentation.mappers.UserUIMapper
 import com.ensibuuko.android_dev_coding_assigment.presentation.mediators.PostsRemoteMediator
 import com.ensibuuko.android_dev_coding_assigment.presentation.models.PostUIModel
+import com.ensibuuko.android_dev_coding_assigment.presentation.models.UserUIModel
 import com.ensibuuko.android_dev_coding_assigment.utils.CachePolicy
 import com.ensibuuko.android_dev_coding_assigment.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,6 +32,7 @@ class HomeViewModel @Inject constructor(
     private val postUIMapper: PostUIMapper,
     private val postLocalMapper: PostLocalMapper,
     private val postDataMapper: PostDataMapper,
+    private val userUIMapper: UserUIMapper,
     private val insertPostUseCase: InsertPostUseCase,
     private val getUserUseCase: GetUserUseCase,
     private val updatePostUseCase: UpdatePostUseCase,
@@ -51,8 +54,22 @@ class HomeViewModel @Inject constructor(
         }
     }.cachedIn(viewModelScope)
 
-    suspend fun getUser(id: Int, cachePolicy: CachePolicy.Type): Flow<Resource<UserEntity>> =
-        getUserUseCase(id, cachePolicy)
+    suspend fun getUser(id: Int, cachePolicy: CachePolicy.Type): Flow<Resource<UserUIModel>?> {
+        val user = getUserUseCase(id, cachePolicy)
+        return user.map { when(it.status){
+            Resource.Status.SUCCESS -> {
+                Resource.success(it.data?.let { it1 -> userUIMapper.toUI(it1) })
+            }
+
+            Resource.Status.ERROR -> {
+                it.message?.let { it1 -> Resource.error(it1) }
+            }
+
+            else -> {
+                Resource.loading()
+            }
+        } }
+    }
 
 
     fun createPost(post: PostUIModel) {

@@ -19,7 +19,7 @@ import com.ensibuuko.android_dev_coding_assigment.ui.theme.customGreen
 fun CustomButton(modifier: Modifier = Modifier,
                  title: String,
                  enabled:Boolean = true,
-                 color: Color = customGreen,
+                 color: Color = MaterialTheme.colors.primary,
                  onClick: () -> Unit){
 
     Button(onClick = onClick,

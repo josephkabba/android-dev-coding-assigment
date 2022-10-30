@@ -3,10 +3,9 @@ package com.ensibuuko.android_dev_coding_assigment.ui.screens.login
 import android.content.res.Resources
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -37,7 +36,11 @@ private fun rememberLoginScreenState(
 }
 
 @Composable
-fun LoginScreen(navController: NavController, viewModel: AccountViewModel = hiltViewModel()) {
+fun LoginScreen(
+    navController: NavController,
+    viewModel: AccountViewModel = hiltViewModel(),
+    scaffoldState: ScaffoldState = rememberScaffoldState()
+) {
     val loginState = rememberLoginScreenState(navController = navController)
     val scope = rememberCoroutineScope()
 
@@ -115,14 +118,18 @@ fun LoginScreen(navController: NavController, viewModel: AccountViewModel = hilt
             CustomButton(title = "Login") {
                 loginState.signInUser { id ->
                     scope.launch {
-                        viewModel.getUser(id.toInt(), CachePolicy.Type.NEVER, true).collect {
-                            when (it.status) {
+                        viewModel.getUser(id.toInt(), CachePolicy.Type.REFRESH, true).collect {
+                            when (it!!.status) {
                                 Resource.Status.SUCCESS -> {
                                     viewModel.saveUserId(id.toInt())
                                 }
 
                                 Resource.Status.ERROR -> {
-
+                                    it.message?.let { it1 ->
+                                        scaffoldState.snackbarHostState.showSnackbar(
+                                            it1
+                                        )
+                                    }
                                 }
 
                                 Resource.Status.LOADING -> {

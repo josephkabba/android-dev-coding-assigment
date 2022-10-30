@@ -30,6 +30,11 @@ class CommentsRemoteMediator(
 
             when(response.status) {
                 Resource.Status.SUCCESS -> {
+
+                    if (loadType == LoadType.REFRESH) {
+                        deleteAllCommentsUseCase()
+                    }
+
                     response.data?.let { insertAllCommentsUseCase(it) }
                 }
 
@@ -40,10 +45,6 @@ class CommentsRemoteMediator(
                 else -> {
 
                 }
-            }
-
-            if (loadType == LoadType.REFRESH) {
-                deleteAllCommentsUseCase()
             }
 
             MediatorResult.Success(

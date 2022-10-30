@@ -1,5 +1,6 @@
 package com.ensibuuko.android_dev_coding_assigment.data
 
+import android.util.Log
 import com.ensibuuko.android_dev_coding_assigment.data.mappers.UserDataMapper
 import com.ensibuuko.android_dev_coding_assigment.utils.CachePolicy
 import com.ensibuuko.android_dev_coding_assigment.domain.UserRepository
@@ -32,7 +33,7 @@ UserRepositoryImpl @Inject constructor(
                         val result = userDataMapper.toDomain(userRemoteMapper.toData(it))
                         emit(Resource.success(result))
                     }.onFailure {
-                        Resource.error<UserEntity>(it.message ?: "Network Error")
+                        emit(Resource.error<UserEntity>("Network Error"))
                     }
                 }
                 CachePolicy.Type.REFRESH -> {
