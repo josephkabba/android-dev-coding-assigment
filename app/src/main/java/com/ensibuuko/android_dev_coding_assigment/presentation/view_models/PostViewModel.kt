@@ -1,5 +1,6 @@
 package com.ensibuuko.android_dev_coding_assigment.presentation.view_models
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -49,7 +50,7 @@ class PostViewModel @Inject constructor(
             deleteAllCommentsUseCase
         )
         return Pager(
-            config = PagingConfig(pageSize = 10),
+            config = PagingConfig(pageSize = 5),
             remoteMediator = commentsRemoteMediator
         ) {
             getCommentsUseCase(postId)
@@ -57,6 +58,7 @@ class PostViewModel @Inject constructor(
             pagingData.map {
                 val commentToData = commentsLocalMapper.toData(it)
                 val commentToEntity = commentsDataMapper.toDomain(commentToData)
+                Log.d("ITEM", commentToData.name.toString())
                 commentsUIMapper.toUI(commentToEntity)
             }
         }.cachedIn(viewModelScope)

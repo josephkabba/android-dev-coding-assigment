@@ -14,7 +14,7 @@ class CommentsDataMapper @Inject constructor() : BaseDataMapper<CommentEntity, C
             t.email,
             t.id,
             t.name,
-            t.id,
+            t.postId,
             t.createdAt
         )
     }
@@ -25,7 +25,7 @@ class CommentsDataMapper @Inject constructor() : BaseDataMapper<CommentEntity, C
             f.email,
             f.id,
             f.name,
-            f.id,
+            f.postId,
             f.createdAt
         )
     }

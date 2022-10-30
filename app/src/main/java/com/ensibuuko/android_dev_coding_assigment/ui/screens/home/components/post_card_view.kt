@@ -68,9 +68,10 @@ fun PostCardView(
     Box(modifier = Modifier.padding(horizontal = 10.dp)) {
 
         if (showDialog) {
-            AlertDialog(onDismissRequest = {
-                showDialog = false
-            },
+            AlertDialog(
+                onDismissRequest = {
+                    showDialog = false
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(32.dp),
@@ -86,22 +87,23 @@ fun PostCardView(
                     }
                 },
                 dismissButton = {
-                         TextButton(onClick = {
-                             showDialog = false
-                         }) {
-                             Text(text = "Dismiss")
-                         }
+                    TextButton(onClick = {
+                        showDialog = false
+                    }) {
+                        Text(text = "Dismiss")
+                    }
                 },
                 title = {
-                        Text(text = "Delete Post")
+                    Text(text = "Delete Post")
                 },
                 text = {
-                       Text("Do you want to delete the post")
+                    Text("Do you want to delete the post")
                 },
                 properties = DialogProperties(
-                dismissOnBackPress = true,
-                dismissOnClickOutside = true
-            ))
+                    dismissOnBackPress = true,
+                    dismissOnClickOutside = true
+                )
+            )
         }
 
         Card(
@@ -111,9 +113,7 @@ fun PostCardView(
             modifier = Modifier
                 .fillMaxWidth(),
             onClick = {
-                if (user != null) {
-                    navController.navigate(Screen.PostScreen.route + "/" + "${postUIModel.id}")
-                }
+                navController.navigate(Screen.PostScreen.route + "/" + "${postUIModel.id}")
             }
         ) {
             Column(
@@ -160,20 +160,30 @@ fun PostCardView(
                         .height(10.dp)
                 )
 
-                Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     if (user != null) {
                         ClickableText(
                             text = AnnotatedString("by ${user!!.name}"),
-                            style = TextStyle(fontStyle = FontStyle(20), fontWeight = FontWeight.Light),
+                            style = TextStyle(
+                                fontStyle = FontStyle(20),
+                                fontWeight = FontWeight.Light
+                            ),
                             onClick = {
                                 if (user != null) {
                                     navController.navigate("${Screen.ProfileScreen.route}/${user!!.id}")
                                 }
                             })
 
-                        if (user!!.id == currentUserId){
+                        if (user!!.id == currentUserId) {
                             IconButton(onClick = { showDialog = !showDialog }) {
-                                Icon(imageVector = Icons.Default.Delete, contentDescription = "delete")
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "delete"
+                                )
                             }
                         }
                     }

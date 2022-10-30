@@ -12,7 +12,7 @@ class CommentsUIMapper @Inject constructor() : BaseUIMapper<CommentEntity, Comme
             d.email,
             d.id,
             d.name,
-            d.id,
+            d.postId,
             d.createdAt
         )
     }
@@ -23,7 +23,7 @@ class CommentsUIMapper @Inject constructor() : BaseUIMapper<CommentEntity, Comme
             u.email,
             u.id,
             u.name,
-            u.id,
+            u.postId,
             u.createdAt
         )
     }
